@@ -1,6 +1,6 @@
 # Trabalho I
 
-Data de Entrega: 08/04/2025
+Data de Entrega: 01/04/2025
 Enviar via SIGAA o link para acesso a um repositório do Github.
 
 ### Exercícios com ExpressJS
