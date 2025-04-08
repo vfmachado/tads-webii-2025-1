@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+        <h1 class="text-2xl font-bold text-center mb-4">To-Do List</h1>
+        <form action="/add" method="POST" class="flex mb-4">
+            <input type="text" name="nome" placeholder="New task" required class="flex-grow p-2 border rounded-l">
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r">Add</button>
+        </form>
+        <ul class="space-y-2">
+            <% tasks.forEach(task => { %>
+                <li class="flex justify-between items-center p-2 bg-gray-200 rounded <%= task.completed ? 'line-through text-gray-500' : '' %>">
+                    <!-- OUTRA OPCAO É FORMATAR A DATA NO FRONT -->
+                    <span><%= task.createdAt %></span>
+                    <span><%= task.name %></span>
+                    <span><%= task.completed ? task.completedAt : '' %></span>
+                    <div class="flex space-x-2">
+                        <form action="/toggle/<%= task.id %>" method="POST">
+                            <button type="submit" class="bg-green-500 text-white px-2 py-1 rounded">Toggle</button>
+                        </form>
+                        <form action="/delete/<%= task.id %>" method="POST">
+                            <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
+                        </form>
+                    </div>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+</body>
+</html>
