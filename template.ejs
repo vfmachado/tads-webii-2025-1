@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Gallery</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100 p-4">
+
+  <div class="max-w-4xl mx-auto bg-white shadow-md p-6 rounded-lg">
+    <h1 class="text-2xl font-bold mb-4">Upload a Photo</h1>
+
+    <form action="/upload" method="POST" enctype="multipart/form-data" class="mb-8">
+      <input type="file" name="photo" accept="image/*" required class="mb-2 block">
+      <input type="text" name="title" placeholder="Optional title" class="mb-2 block w-full px-3 py-1 border rounded">
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Upload</button>
+    </form>
+
+    <h2 class="text-xl font-semibold mb-4">Gallery</h2>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+      <% if (images.length > 0) { %>
+        <% images.forEach(image => { %>
+          <div class="border rounded overflow-hidden shadow-sm">
+            <img src="<%= image.url %>" alt="Photo" class="w-full h-48 object-cover">
+            <% if (image.title) { %>
+              <div class="p-2 text-center text-sm text-gray-700"><%= image.title %></div>
+            <% } %>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p class="col-span-full text-center text-gray-500">No images to display.</p>
+      <% } %>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex justify-center mt-6 space-x-2">
+      <% if (currentPage > 1) { %>
+        <a href="?page=<%= currentPage - 1 %>" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Prev</a>
+      <% } %>
+
+      <% for (let i = 1; i <= totalPages; i++) { %>
+        <a href="?page=<%= i %>" class="px-3 py-1 rounded 
+          <%= i === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300' %>">
+          <%= i %>
+        </a>
+      <% } %>
+
+      <% if (currentPage < totalPages) { %>
+        <a href="?page=<%= currentPage + 1 %>" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Next</a>
+      <% } %>
+    </div>
+  </div>
+
+</body>
+</html>
